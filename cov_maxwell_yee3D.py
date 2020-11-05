@@ -13,10 +13,11 @@
 #       • Mimetic operator
 #
 
-import math
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+import math
+import sys
 
 # Time steps
 Nt = 500 
@@ -68,19 +69,12 @@ Bx1_old = np.zeros([Nx1, Nx2, Nx3], dtype=float)
 Bx2_old = np.zeros([Nx1, Nx2, Nx3], dtype=float)
 Bx3_old = np.zeros([Nx1, Nx2, Nx3], dtype=float)
 # Fields increments
-dEx1 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-dEx2 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-dEx3 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-dBx1 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-dBx2 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-dBx3 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-# Fields increments (old)
-dEx1_old = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-dEx2_old = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-dEx3_old = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-dBx1_old = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-dBx2_old = np.zeros([Nx1, Nx2, Nx3], dtype=float)
-dBx3_old = np.zeros([Nx1, Nx2, Nx3], dtype=float)
+curl_Ex1 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
+curl_Ex2 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
+curl_Ex3 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
+curl_Bx1 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
+curl_Bx2 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
+curl_Bx3 = np.zeros([Nx1, Nx2, Nx3], dtype=float)
 
 #Perturbation
 Bx3[int((Nx1-1)/2), int((Nx2-1)/2), :] = 1.
@@ -108,7 +102,7 @@ def myplot2(values, name):
     plt.figure(name)
     plt.plot(values)
 
-
+'''
 def curl(Ax1, Ax2, Ax3, s):   
     # s = 0 -> Forward deriv
     # s = 1 -> Backward derivative   
@@ -193,7 +187,6 @@ def curl(Ax, Ay, Az, s):
     rz = ddx(Ay, s) - ddy(Ax, s)
     return rx, ry, rz
 #------------------------------------------------------------#
-'''
 
 # Divergence operator
 def div(Ax1, Ax2, Ax3):
@@ -224,21 +217,21 @@ for t in range(Nt):
     Bx2_old[:, :, :] = Bx2[:, :, :]
     Bx3_old[:, :, :] = Bx2[:, :, :]
 
-    dEx1, dEx2, dEx3 = curl(Bx1, Bx2, Bx3, 0)#0
+    curl_Ex1, curl_Ex2, curl_Ex3 = curl(Bx1, Bx2, Bx3, 0)#0
 
-    Ex1 += dt*dEx1
-    Ex2 += dt*dEx2
-    Ex3 += dt*dEx3
+    Ex1 += dt*curl_Ex1
+    Ex2 += dt*curl_Ex2
+    Ex3 += dt*curl_Ex3
 
     periodicBC(Ex1)
     periodicBC(Ex2)
     periodicBC(Ex2)
 
-    dBx1, dBx2, dBx3 = curl(Ex1, Ex2, Ex3, 1)#1
+    curl_Bx1, curl_Bx2, curl_Bx3 = curl(Ex1, Ex2, Ex3, 1)#1
 
-    Bx1 -= dt*dBx1
-    Bx2 -= dt*dBx2
-    Bx3 -= dt*dBx3
+    Bx1 -= dt*curl_Bx1
+    Bx2 -= dt*curl_Bx2
+    Bx3 -= dt*curl_Bx3
 
     periodicBC(Bx1)
     periodicBC(Bx2)
@@ -249,7 +242,8 @@ for t in range(Nt):
     + Bx1[ib:ie, jb:je, kb:ke]*Bx1_old[ib:ie, jb:je, kb:ke] + Bx2[ib:ie, jb:je, kb:ke]*Bx2_old[ib:ie, jb:je, kb:ke] + Bx3[ib:ie, jb:je, kb:ke]*Bx3_old[ib:ie, jb:je, kb:ke])
     divB[t] = np.sum(np.abs(div(Bx1, Bx2, Bx3)))
     print('t step: ', t)
-'''    
+
+'''  
     plt.subplot(2, 2, 1)
     plt.pcolor(x1v, x2v, Bx3)
     plt.colorbar()
@@ -259,7 +253,6 @@ for t in range(Nt):
     plt.plot(U)
     plt.subplot(2, 2, 4)
     plt.plot(U)
-    plt.pause(0.000000000001)
 '''
 print('DONE!')
 
