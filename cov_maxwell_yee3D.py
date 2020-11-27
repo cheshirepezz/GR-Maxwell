@@ -223,9 +223,9 @@ def derx3(A, s):
     return res
 
 def curl(A1, A2, A3, s):
-    #
-    #To compute the Curl in covariant coordinate.
-    
+    '''
+    To compute the Curl in covariant coordinate.
+    '''
     curlx1 = np.zeros([nx1, nx2, nx3], dtype=float)
     curlx2 = np.zeros([nx1, nx2, nx3], dtype=float)
     curlx3 = np.zeros([nx1, nx2, nx3], dtype=float)
@@ -238,25 +238,6 @@ def curl(A1, A2, A3, s):
            -  (derx2(g11[:, :, :, s] * A1, s) + derx2(avg2(avg1(g12[:, :, :, s] * A2)), s) + derx2(avg3(avg1(g13[:, :, :, s] * A3)), s)))/J
     return curlx1, curlx2, curlx3
 
-'''
-def curl(A1, A2, A3, s):
-    # To compute the Curl in covariant coordinate.
-    curlx1 = np.zeros_like(A1)
-    curlx2 = np.zeros_like(A1)
-    curlx3 = np.zeros_like(A1)
-    print(curlx1.shape)
-    print(curlx1[ib:ie, jb:je, kb:ke].shape)
-    #print((derx2(avg1(avg3(g31[ib:ie, jb:je, kb:ke, s]*A1)), s)).shape)
-    print(g21[ib:ie, jb:je, kb:ke, s].shape)
-
-    curlx1[ib:ie, jb:je, kb:ke] = ((derx2(avg1(avg3(g31[ib:ie, jb:je, kb:ke, s]*A1)), s) + derx2(avg2(avg3(g32[ib:ie, jb:je, kb:ke, s]*A2)), s) + derx2(g33[ib:ie, jb:je, kb:ke, s]*A3, s))\
-                                -  (derx3(avg1(avg2(g21[ib:ie, jb:je, kb:ke, s]*A1)), s) + derx3(g22[ib:ie, jb:je, kb:ke, s]*A2, s) + derx3(avg3(avg2(g23[ib:ie, jb:je, kb:ke, s]*A3)), s)))/J
-    curlx2[ib:ie, jb:je, kb:ke] = ((derx3(g11[ib:ie, jb:je, kb:ke, s]*A1, s) + derx3(avg2(avg1(g12[ib:ie, jb:je, kb:ke, s]*A2)), s) + derx3(avg3(avg1(g13[ib:ie, jb:je, kb:ke, s]*A3)), s))\
-                                -  (derx1(avg1(avg3(g31[ib:ie, jb:je, kb:ke, s]*A1)), s) + derx1(avg2(avg3(g32[ib:ie, jb:je, kb:ke, s]*A2)), s) + derx1(g33[ib:ie, jb:je, kb:ke, s]*A3, s)))/J
-    curlx3[ib:ie, jb:je, kb:ke] = ((derx1(avg1(avg2(g21[ib:ie, jb:je, kb:ke, s]*A1)), s) + derx1(g22[ib:ie, jb:je, kb:ke, s]*A2, s) + derx1(avg3(avg2(g23[ib:ie, jb:je, kb:ke, s]*A3)), s))\
-                                -  (derx2(g11[ib:ie, jb:je, kb:ke, s]*A1, s) + derx2(avg2(avg1(g12[ib:ie, jb:je, kb:ke, s]*A2)), s) + derx2(avg3(avg1(g13[ib:ie, jb:je, kb:ke, s]*A3)), s)))/J
-    return curlx1, curlx2, curlx3
-'''
 def dx1dx(A, s):
     '''
     To compute the change of coordinate x1 - x.
