@@ -191,7 +191,6 @@ def avg3(A):
     res[ib:ie, jb:je, kb:ke] = (A[ib:ie, jb:je, kb+1:ke+1] + A[ib:ie, jb:je, kb:ke])/2
     return res
 
-
 def derx1(A, s):
     '''
     To compute the derivative along the direction x1.
@@ -336,7 +335,7 @@ for t in range(Nt):
     print('div(E)          :', divE[t])
 
     if flag_data == True:
-        f = open("output_field.dat", "a")
+        f = open("output_cov_maxwell_yee3D.dat", "a")
         #print(t, np.sum(Ex1), np.sum(Ex2), np.sum(Ex3), np.sum(Bx1), np.sum(Bx2), np.sum(Bx3), U[t], divE[t], file=f)
         print(t, np.sum(Ex1), np.sum(Ex2), np.sum(Ex3), np.sum(Bx1), np.sum(Bx2), np.sum(Bx3), file=f)
         f.close()
