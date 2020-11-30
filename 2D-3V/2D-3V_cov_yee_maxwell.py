@@ -1,13 +1,13 @@
 #
 # author:         L. Pezzini
 # e-mail :        luca.pezzini@edu.unito.it
-# date:           24.11.2020
+# date:           30.11.2020
 # copyright:      2020 KU Leuven (c)
 # MIT license
 #
 
 #
-# Maxwell Solver 3D
+# Maxwell Solver 2D-3V
 #       • General coordinates
 #       • Energy conserving
 #       • Mimetic operator

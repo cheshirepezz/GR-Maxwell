@@ -7,7 +7,7 @@
 #
 
 #
-# Maxwell Solver 3D
+# Maxwell Solver 3D-3V
 #       • General coordinates
 #       • Energy conserving
 #       • Mimetic operator
